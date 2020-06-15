@@ -10,6 +10,8 @@
     <!-- Bootstrap -->
     <link href="js/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 
+    <link rel="icon" href="./image/webimg/T.jpg" type="image/x-icon">
+    <link rel="shortcut icon" href="./image/webimg/T.jpg" type="image/x-icon">
     <!-- HTML5 shim 和 Respond.js 是为了让 IE8 支持 HTML5 元素和媒体查询（media queries）功能 -->
     <!-- 警告：通过 file:// 协议（就是直接将 html 页面拖拽到浏览器中）访问页面时 Respond.js 不起作用 -->
     <!--[if lt IE 9]>
@@ -92,12 +94,17 @@
 </head>
 <body>
 <div id="app">
-<!--    =======================================导航条=======================================-->
+<!--    ==========================================导航条=======================================-->
     <nav class="navbar navbar-default">
         <div class="container-fluid">
             <div class="navbar-header">
                 <a class="navbar-brand" href="#">
-                    <img style="height: 180%;"  alt="图标" src="./image/webimg/bilibili.jpg">
+                    tuShen121
+                </a>
+            </div>
+            <div v-show="editEnanle" class="navbar-header ">
+                <a v-on:click="resetProduct"  class="navbar-brand" href="#">
+                    恢复出厂
                 </a>
             </div>
             <div v-show="editEnanle" class="navbar-header pull-right">
@@ -122,8 +129,18 @@
 <!--            </div>-->
         </div>
     </nav>
-    <br><br><br><br><br>
-<!--    =======================================搜索框=======================================-->
+    <br><br>
+    <!--    =======================================图标=======================================-->
+    <div class="container-fluid">
+        <div class="row text-center" >
+<!--            <div class="col-md-5 col-md-offset-4">-->
+            <h1 style="color: rgb(132, 132, 132);">搜常家</h1>
+<!--                <img style="height: 180%;"  alt="图标" src="./image/webimg/souchangjia.png">-->
+<!--            </div>-->
+        </div>
+    </div>
+    <br>
+<!--    ===========================================搜索框=======================================-->
     <div class="container-fluid">
         <div class="row">
             <div class="col-md-6 col-md-offset-3" >
@@ -138,7 +155,7 @@
 
         </div>
     </div>
-<!--    ====================================================选择分类标签=======================================-->
+<!--    ===========================================选择分类标签=======================================-->
     <br><br><br>
 
     <div class="container-fluid">
@@ -171,9 +188,8 @@
         </div>
     </div>
 
-<!--==========================================================数据框================================================================-->
+<!--================================================数据框================================================================-->
     <br><br>
-
     <div class="container-fluid">
         <div class="row">
             <div class="col-md-9 col-md-offset-2" >
@@ -181,9 +197,16 @@
                             <a
                                v-bind:href="webData.webAddress"
                                class="btn btn-default" >
+<!--                                网址网址的图标-->
 
-                                <img class="icon" v-bind:src="webData.webImg" alt="..." class="img-rounded">
-                                <span>{{webData.webName}}</span>
+                                <img v-if="getWebImg(index).length>2"
+                                     class="icon img-rounded"
+                                     v-bind:src="getWebImg(index)"
+                                >
+                                <button v-else type="button" class="btn btn-info" v-text="getWebImg(index)"
+                                        style="font-size: 1.5em;width: 43px;height: 43px ;display:inline"></button>
+<!--                                网站的名称-->
+                                <span >{{webData.webName}}</span>
                             </a>
 <!--                            编辑数据图标-->
                             <a href="#">
@@ -207,7 +230,7 @@
             </div>
         </div>
     </div>
-<!--========================================================添加分类弹出框=======================================================================-->
+<!--==============================================添加分类弹出框=======================================================================-->
     <div class="container-fluid " v-show="addSortCase">
         <div class="row">
             <div class="col-md-4 col-md-offset-4 addSortAlert" style="background-color: rgb(211, 255, 252);">
@@ -241,7 +264,7 @@
             </div>
         </div>
     </div>
-<!--========================================================编辑分类弹出框=======================================================================-->
+<!--==============================================编辑分类弹出框=======================================================================-->
     <div class="container-fluid " v-show="editSortCase">
         <div class="row">
             <div class="col-md-4 col-md-offset-4 addSortAlert" style="background-color: rgb(211, 255, 252);">
@@ -276,7 +299,7 @@
         </div>
     </div>
 
-    <!--====================================================编辑选项弹出框=======================================-->
+    <!--==========================================编辑选项弹出框=======================================-->
     <div class="container-fluid " v-show="editWebDataCase">
         <div class="row">
             <div class="col-md-4 col-md-offset-4 addSortAlert" style="background-color: rgb(211, 255, 252);">
@@ -321,7 +344,7 @@
         </div>
     </div>
 
-    <!--====================================================添加网站数据弹出框===========================================-->
+    <!--===========================================添加网站数据弹出框===========================================-->
     <div class="container-fluid " v-show="addWebDataCase">
         <div class="row">
             <div class="col-md-4 col-md-offset-4 addSortAlert" style="background-color: rgb(211, 255, 252);">

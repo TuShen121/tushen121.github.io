@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
+    <title>Bootstrap 101 Template</title>
+
+    <!-- Bootstrap -->
+    <link href="js/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- HTML5 shim 和 Respond.js 是为了让 IE8 支持 HTML5 元素和媒体查询（media queries）功能 -->
+    <!-- 警告：通过 file:// 协议（就是直接将 html 页面拖拽到浏览器中）访问页面时 Respond.js 不起作用 -->
+    <!--[if lt IE 9]>
+    <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+    <![endif]-->
+
+    <style>
+        /*标签添加图标*/
+        .addImg{
+            width:35px;
+            height:35px;
+        }
+        /*数据a标签的格式*/
+        .itlem{
+        /*强制不换行*/
+            white-space:nowrap;
+            margin-left: 0;
+            margin-bottom: 25px;
+            padding: 0;
+            width: 180px;
+
+        }
+        .itlem>a{
+            padding: 0;
+            margin: 0;
+            width: 120px;
+            height: 45px;
+            text-align: left;
+        }
+        /*数据a标签的图片格式*/
+        .icon{
+            width:43px;
+            height:43px;
+
+        }
+        /*数据编辑图标*/
+        .editImg{
+            /*position: relative;*/
+            width:20px;
+            height:20px;
+            /*top: -12px;*/
+            /*图片转块元素，不然显示没在div里*/
+            display:block;
+            /*块级元素成行显示*/
+            display:inline
+        }
+        /*数据移除图标*/
+        .remImg{
+            /*position: relative;*/
+            width:20px;
+            height:20px;
+            /*top: -12px;*/
+            /*图片转块元素，不然显示没在div里*/
+            display:block;
+            /*块级元素成行显示*/
+            display:inline
+        }
+        /*数据添加图标*/
+        .selectAddImg
+        {
+            width:35px;
+            height:35px;
+            position: relative;
+            left: -73px;
+            /*top: -10px;*/
+
+        }
+        /*类别添加弹出框*/
+        .addSortAlert{
+            position: absolute;
+            top: 200px;
+            z-index: 99;
+            border-style: solid ;
+            border-color: #2aabd2;
+            border-width: 1px;
+            border-radius: 2px;
+        }
+    </style>
+</head>
+<body>
+<div id="app">
+<!--    导航条-->
+    <nav class="navbar navbar-default">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="#">
+                    <img style="height: 180%;"  alt="图标" src="./image/webimg/bilibili.jpg">
+                </a>
+            </div>
+            <div v-if="editEnanle" class="navbar-header pull-right">
+                <a v-on:click="togleEditEnable" class="navbar-brand" href="#">
+                    取消编辑
+                </a>
+            </div>
+            <div v-if="!editEnanle" class="navbar-header pull-right">
+                <a v-on:click="togleEditEnable" class="navbar-brand" href="#">
+                    编辑
+                </a>
+            </div>
+            <div v-if="editEnanle" class="navbar-header pull-right">
+                <a class="navbar-brand" href="#">
+                    保存
+                </a>
+            </div>
+            <div class="navbar-header  pull-right">
+                <a class="navbar-brand" href="#">
+                    登录
+                </a>
+            </div>
+        </div>
+    </nav>
+    <br><br><br><br><br>
+<!--    搜索框-->
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-6 col-md-offset-3" >
+                <div class="input-group input-group-lg">
+                    <span class="input-group-addon">百度</span>
+                    <input id="searchEngineInput" type="text" class="form-control" aria-label="Amount (to the nearest dollar)">
+                    <span class="input-group-btn">
+                        <button v-on:click="searchEngine" type="button" class="btn btn-default ">搜索</button>
+                    </span>
+                </div>
+            </div>
+
+        </div>
+    </div>
+<!--    选择分类标签-->
+    <br><br><br>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-4 col-md-offset-4" >
+                <ul id="tab_ul" class="nav nav-tabs " style="font-size: 15px">
+
+                    <li v-for="(sortData,index) in sortDatas"
+                        role="presentation"
+                        v-bind:class="{active: index==0}"
+                        v-on:click="sortClick(index)"
+                    >
+                        <a data-toggle="tab" href="#">{{sortData}}</a></li>
+
+<!--                    添加标签分类图标-->
+                    <a v-if="editEnanle" v-on:click="showAddSortCase" href="#"><img class="addImg" src="./image/controlimg/add.png" alt=""></a>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+<!--=========================数据框=========================-->
+    <br><br>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-9 col-md-offset-2" >
+                        <div class="col-md-2  itlem" v-for="(webData,index) in AllwebDatas[sortIndex]">
+                            <a
+                               v-bind:href="webData.webAddress"
+                               class="btn btn-default" >
+
+                                <img class="icon" v-bind:src="webData.webImg" alt="..." class="img-rounded">
+                                <span>{{webData.webName}}</span>
+                            </a>
+<!--                            编辑数据图标-->
+                            <a href="#">
+                                <img v-on:click="showEditWebDataCase(index,$event)" v-if="editEnanle" class="editImg" src="./image/controlimg/edit.png" alt="">
+                            </a>
+<!--                            删除数据图标-->
+                            <a href="#">
+                                <img v-on:click="removeWebData(index,$event)" v-if="editEnanle" class="remImg" src="./image/controlimg/remove.png" alt="">
+                            </a>
+                        </div>
+
+                    <!--   添加数据选项的图标-->
+                <div class="col-md-2 itlem"  v-if="editEnanle">
+                        <a v-on:click="showAddWebDataCase()"
+                           href="#"
+                           class="btn btn-default " >
+                            <a  href="#"><img class=" selectAddImg" src="./image/controlimg/add.png" alt=""></a>
+                        </a>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+
+<!--=========================添加分类弹出框================================-->
+    <div class="container-fluid " v-show="addSortCase">
+        <div class="row">
+            <div class="col-md-4 col-md-offset-4 addSortAlert" style="background-color: rgb(211, 255, 252);">
+                <!--                显示右上角的X号-->
+                    <div class="row">
+                        <div class="col-md-2 col-md-offset-11">
+                            <button v-on:click="hiddenAddSortCase" type="button" class="btn btn-primary ">X</button>
+                        </div>
+                    </div>
+                <!--                显示添加分类标题-->
+                    <div class="row">
+                        <div class="col-md-4 col-md-offset-4">
+                            <h3>添加分类</h3>
+                        </div>
+                    </div>
+
+                    <br>
+                <!--                添加分类输入框-->
+                    <div class="col-md-10 col-md-offset-1 input-group input-group-lg">
+                        <span class="input-group-btn">
+                        <button class="btn btn-default" type="button">名称</button>
+                        </span>
+                        <input id="SortAddInput" type="text" class="form-control" placeholder="请输入要添加的分类名称">
+                    </div><!-- /input-group -->
+                    <br> <br> <br>
+                <!--                确定按钮-->
+                    <div class="col-md-10 col-md-offset-1">
+                        <button v-on:click="addSort()" type="button" class="btn btn-primary btn-lg btn-block">确定</button>
+                    </div>
+                    <br><br> <br><br>
+            </div>
+        </div>
+    </div>
+
+    <!--编辑选项弹出框-->
+    <div class="container-fluid " v-show="editWebDataCase">
+        <div class="row">
+            <div class="col-md-4 col-md-offset-4 addSortAlert" style="background-color: rgb(211, 255, 252);">
+<!--                显示右上角的X号-->
+                <div class="row">
+                    <div class="col-md-2 col-md-offset-11">
+                        <button v-on:click="hiddenEditWebDataCase"  type="button" class="btn btn-primary ">X</button>
+                    </div>
+                </div>
+<!--                显示编辑选项的标题-->
+                <div class="row">
+                    <div class="col-md-4 col-md-offset-4">
+                        <h3>编辑选项</h3>
+                    </div>
+                </div>
+
+                <br>
+<!--                网站名输入框-->
+                <div class="col-md-10 col-md-offset-1 input-group input-group-lg">
+                        <span class="input-group-btn">
+                        <button class="btn btn-default" type="button">名称</button>
+                        </span>
+                    <input id="editInputWebName" type="text" class="form-control" placeholder="请输入要添加的网站名称">
+                </div><!-- /input-group -->
+
+                <br> <br>
+<!--                网站地址输入框-->
+                <div class="col-md-10 col-md-offset-1 input-group input-group-lg">
+                        <span class="input-group-btn">
+                        <button class="btn btn-default" type="button">网址</button>
+                        </span>
+                    <input id="editInputWebAddress" type="text" class="form-control" placeholder="请输入要添加的网址">
+                </div><!-- /input-group -->
+
+                <br> <br> <br>
+<!--                确定按钮-->
+                <div class="col-md-10 col-md-offset-1">
+                    <button v-on:click="editWebData" type="button" class="btn btn-primary btn-lg btn-block">确定</button>
+                </div>
+                <br><br> <br><br>
+            </div>
+        </div>
+    </div>
+
+    <!--添加网站数据弹出框-->
+    <div class="container-fluid " v-show="addWebDataCase">
+        <div class="row">
+            <div class="col-md-4 col-md-offset-4 addSortAlert" style="background-color: rgb(211, 255, 252);">
+                <!--                显示右上角的X号-->
+                <div class="row">
+                    <div class="col-md-2 col-md-offset-11">
+                        <button v-on:click="hiddenAddWebDataCase"  type="button" class="btn btn-primary ">X</button>
+                    </div>
+                </div>
+                <!--                显示添加选项的标题-->
+                <div class="row">
+                    <div class="col-md-4 col-md-offset-4">
+                        <h3>添加选项</h3>
+                    </div>
+                </div>
+
+                <br>
+                <!--                网站名输入框-->
+                <div class="col-md-10 col-md-offset-1 input-group input-group-lg">
+                        <span class="input-group-btn">
+                        <button class="btn btn-default" type="button">名称</button>
+                        </span>
+                    <input id="addInputWebName" type="text" class="form-control" placeholder="请输入要添加的网站名称">
+                </div><!-- /input-group -->
+
+                <br> <br>
+                <!--                网站地址输入框-->
+                <div class="col-md-10 col-md-offset-1 input-group input-group-lg">
+                        <span class="input-group-btn">
+                        <button class="btn btn-default" type="button">网址</button>
+                        </span>
+                    <input id="addInputWebAddress" type="text" class="form-control" placeholder="请输入要添加的网址" value="http://">
+                </div><!-- /input-group -->
+
+                <br> <br> <br>
+                <!--                确定按钮-->
+                <div class="col-md-10 col-md-offset-1">
+                    <button v-on:click="addWebData" type="button" class="btn btn-primary btn-lg btn-block">确定</button>
+                </div>
+                <br><br> <br><br>
+            </div>
+        </div>
+    </div>
+
+</div>
+<!-- jQuery (Bootstrap 的所有 JavaScript 插件都依赖 jQuery，所以必须放在前边) -->
+<script src="js/jquery.min.js"></script>
+<!-- 加载 Bootstrap 的所有 JavaScript 插件。你也可以根据需要只加载单个插件。 -->
+<script src="js/bootstrap/js/bootstrap.min.js"></script>
+<script src="js/vue.js"></script>
+<script src="js/index.js"></script>
+
+</body>
+</html>

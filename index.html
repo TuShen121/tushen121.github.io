@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
-    <title>搜常家</title>
+    <title>搜常夹</title>
 
     <!-- Bootstrap -->
     <link href="js/bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -134,7 +134,7 @@
     <div class="container-fluid">
         <div class="row text-center" >
 <!--            <div class="col-md-5 col-md-offset-4">-->
-            <h1 style="color: rgb(132, 132, 132);">搜常家</h1>
+            <h1 style="color: rgb(132, 132, 132);">搜常夹</h1>
 <!--                <img style="height: 180%;"  alt="图标" src="./image/webimg/souchangjia.png">-->
 <!--            </div>-->
         </div>
@@ -204,7 +204,9 @@
                                      v-bind:src="getWebImg(index)"
                                 >
                                 <button v-else type="button" class="btn btn-info" v-text="getWebImg(index)"
-                                        style="font-size: 1.5em;width: 43px;height: 43px ;display:inline"></button>
+                                        style="font-size: 1.5em;width: 43px;height: 43px ;display:inline"
+                                        v-bind:style="{ backgroundColor: MyWebBtnColor[index%10]}"
+                                ></button>
 <!--                                网站的名称-->
                                 <span >{{webData.webName}}</span>
                             </a>

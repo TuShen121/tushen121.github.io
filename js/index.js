@@ -70,7 +70,6 @@ var webData =[
 
 
 
-
 var app = new Vue({
     el: '#app',
     data: {
@@ -86,6 +85,8 @@ var app = new Vue({
 
         sortDatas: sortData,//类别数据
         AllwebDatas: webData,//所有类别的网址数据
+
+        MyWebBtnColor:["#ff475b","#ff6442","#00d2b1","#00d2b1","#90d56e","#b191ea","#389eec","#ff81bc","#a8b2bd","#00c4ea"],
     },
     //页面加载时调用的函数
     mounted:function(){

@@ -168,7 +168,7 @@
                         v-bind:class="{active: index==0}"
                     >
                         <!-- //显示分类的名称-->
-                        <a  v-on:click="sortClick(index)"  data-toggle="tab" href="#">{{sortData}}</a>
+                        <a  v-on:click="sortClick(index)"  data-toggle="tab" href="#" v-text="sortData"></a>
 
                         <!--                            编辑数据图标-->
                         <a href="#" v-if="editEnanle" v-on:click="showEditSortCase(index)">
@@ -208,7 +208,7 @@
                                         v-bind:style="{ backgroundColor: MyWebBtnColor[index%10]}"
                                 ></button>
 <!--                                网站的名称-->
-                                <span >{{webData.webName}}</span>
+                                <span v-text="webData.webName"></span>
                             </a>
 <!--                            编辑数据图标-->
                             <a href="#">
@@ -233,7 +233,7 @@
         </div>
     </div>
 <!--==============================================添加分类弹出框=======================================================================-->
-    <div class="container-fluid " v-show="addSortCase">
+    <div style="display: none" class="container-fluid " v-show="addSortCase">
         <div class="row">
             <div class="col-md-4 col-md-offset-4 addSortAlert" style="background-color: rgb(211, 255, 252);">
                 <!--                显示右上角的X号-->
@@ -267,7 +267,7 @@
         </div>
     </div>
 <!--==============================================编辑分类弹出框=======================================================================-->
-    <div class="container-fluid " v-show="editSortCase">
+    <div style="display: none" class="container-fluid " v-show="editSortCase">
         <div class="row">
             <div class="col-md-4 col-md-offset-4 addSortAlert" style="background-color: rgb(211, 255, 252);">
                 <!--                显示右上角的X号-->
@@ -302,7 +302,7 @@
     </div>
 
     <!--==========================================编辑选项弹出框=======================================-->
-    <div class="container-fluid " v-show="editWebDataCase">
+    <div style="display: none" class="container-fluid " v-show="editWebDataCase">
         <div class="row">
             <div class="col-md-4 col-md-offset-4 addSortAlert" style="background-color: rgb(211, 255, 252);">
 <!--                显示右上角的X号-->
@@ -347,7 +347,7 @@
     </div>
 
     <!--===========================================添加网站数据弹出框===========================================-->
-    <div class="container-fluid " v-show="addWebDataCase">
+    <div style="display: none" class="container-fluid " v-show="addWebDataCase">
         <div class="row">
             <div class="col-md-4 col-md-offset-4 addSortAlert" style="background-color: rgb(211, 255, 252);">
                 <!--                显示右上角的X号-->

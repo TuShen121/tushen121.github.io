@@ -146,9 +146,9 @@
             <div class="col-md-6 col-md-offset-3" >
                 <div class="input-group input-group-lg">
                     <span class="input-group-addon">百度</span>
-                    <input id="searchEngineInput" type="text" class="form-control" aria-label="Amount (to the nearest dollar)">
+                    <input v-on:keyup.enter="searchEngine" id="searchEngineInput" type="text" class="form-control" aria-label="Amount (to the nearest dollar)">
                     <span class="input-group-btn">
-                        <button v-on:click="searchEngine" type="button" class="btn btn-default ">搜索</button>
+                        <button  v-on:click="searchEngine" type="button" class="btn btn-default ">搜索</button>
                     </span>
                 </div>
             </div>

@@ -69,7 +69,6 @@ var webData =[
     ];
 
 
-
 var app = new Vue({
     el: '#app',
     data: {
